@@ -29,7 +29,7 @@ While Developing the project , Was getting some errors so I avoided using Venv ,
     python app.py
     ```
 ## Problems I faced and is Still working On :: 
-- Solved : Creating a Unique Cart for each User
+- ## Solved : Creating a Unique Cart for each User
 - ## Remaining:
     - 1. Using Cascade in SQL to delete all the products with the categories , 
     Right now ,each product is needed to removed first before deleting each category 
