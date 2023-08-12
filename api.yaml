@@ -1,6 +1,6 @@
 openapi: 3.0.0
 info:
-  title: Products API
+  title: MAD1 Grocery API
   version: 1.0.0
 
 paths:
