@@ -1,0 +1,75 @@
+{% extends 'base.html' %}
+
+{% block content %}
+
+<h1>Manager's Summary</h1>
+
+<div class="container mt-4">
+    <div class="row">
+        <div class="col-md-3">
+            <div class="card text-white bg-primary mb-3">
+                <div class="card-header">Total Order Count </div>
+                <div class="card-body">
+                    <h5 class="card-title">{{ total_orders }}</h5>
+                </div>
+            </div>
+        </div>
+        <div class="col-md-3">
+            <div class="card text-white bg-success mb-3">
+                <div class="card-header">Total Sales (In Rupees)</div>
+                <div class="card-body">
+                    <h5 class="card-title">{{ total_sales }}</h5>
+                </div>
+            </div>
+        </div>
+        <div class="col-md-3">
+            <div class="card text-white bg-danger mb-3">
+                <div class="card-header">Out of Order Items</div>
+                <div class="card-body">
+                    <h5 class="card-title">{{ out_of_order_items }}</h5>
+                </div>
+            </div>
+        </div>
+        <div class="col-md-3">
+            <div class="card text-white bg-warning mb-3">
+                <div class="card-header">Customer Favourite Product</div>
+                <div class="card-body">
+                    <h5 class="card-title">{{ favorite_product }}</h5>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- Graphs -->
+<div class="container mt-5">
+    <div class="row mb-4">
+        <div class="col-md-6">
+            <h3>Total Sales for the Last 7 Days</h3>
+            <img src="data:image/png;base64,{{ sales_graph }}" alt="Total Sales for 7 days" class="img-fluid">
+        </div>
+
+        <div class="col-md-6">
+            <h3>Total Sales for the Last Month</h3>
+            <img src="data:image/png;base64,{{ sales_graph_2 }}" alt="Total Sales for the Last Month" class="img-fluid">
+
+        </div>
+    </div>
+
+    <div class="row mb-4">
+        <!--  Sales Distribution Graph -->
+        <div class="col-md-6">
+            <h3>Product Sales Distribution</h3>
+            <img src="data:image/png;base64,{{ products_sales_distribution_graph }}" alt="Product Sales Distribution" class="img-fluid">
+        </div>
+
+        <!--  Activity Graph -->
+        <div class="col-md-6">
+            <h3>User Activity Over the Last 7 Days</h3>
+            <img src="data:image/png;base64,{{ user_activity_graph }}" alt="User Activity Over the Last 7 Days" class="img-fluid">
+        </div>
+    </div>
+</div>
+
+
+{% endblock %}

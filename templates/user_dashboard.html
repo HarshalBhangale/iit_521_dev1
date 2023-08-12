@@ -1,0 +1,149 @@
+{% extends 'base.html' %}
+
+{% block content %}
+
+<div class="d-flex justify-content-end mt-3">
+    <a href="{{ url_for('user_logout') }}" class="btn btn-primary">Logout</a>
+    <a href="{{ url_for('checkout') }}" class="btn btn-primary ml-2">Orders</a>
+</div>
+
+<div class="container mt-4">
+    <div class="text-center">
+        <h1>Welcome, {{ current_user.username }}</h1>
+    </div>
+</div>
+
+<div class="container mt-4">
+    <form action="{{ url_for('user_dashboard') }}" method="get" class="form-inline">
+        <div class="row">
+            <div class="col-md-6 mb-3">
+                <div class="input-group">
+                    <input type="text" name="search_query" class="form-control" placeholder="Search for a product">
+                    <div class="input-group-append">
+                        <button type="submit" class="btn btn-primary">Search</button>
+                    </div>
+                </div>
+            </div>
+            <div class="col-md-6 mb-3">
+                <div class="input-group">
+                    <select name="sort_option" class="form-control">
+                        <option value="name_asc">Name A-Z</option>
+                        <option value="name_desc">Name Z-A</option>
+                        <option value="price_asc">Price Low to High</option>
+                        <option value="price_desc">Price High to Low</option>
+                    </select>
+                    <div class="input-group-append">
+                        <button type="submit" class="btn btn-primary">Sort</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </form>
+</div>
+
+<div class="container mt-4">
+    {% for category in categories %}
+    <div class="mb-5 p-3 border rounded bg-light">
+        <h3 class="mb-4 border-bottom pb-2">{{ category.name }}</h3>
+        
+        <div class="row">
+            {% if category.products %}
+                {% for product in category.products %}
+                    <div class="col-md-4 mb-4">
+                        <div class="card shadow">
+                            <div class="card-body">
+                                <h5 class="card-title">{{ product.name }}</h5>
+                                <p class="card-text">
+                                    Unit: {{ product.unit }}<br>
+                                    Price/Unit: ${{ product.price_per_unit }}<br>
+                                    Stock: {{ product.stock_quantity }}
+                                </p>
+                                <button class="btn btn-primary btn-sm mt-2" data-toggle="modal" data-target="#buyModal-{{ product.id }}">Buy Now</button>    
+                            </div>
+                            <div class="modal fade" id="buyModal-{{ product.id }}" tabindex="-1" aria-labelledby="buyModalLabel-{{ product.id }}" aria-hidden="true">
+                                <div class="modal-dialog">
+                                    <div class="modal-content">
+                                        <div class="modal-header">
+                                            <h5 class="modal-title" id="buyModalLabel-{{ product.id }}">Purchase {{ product.name }}</h5>
+                                            <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                                <span aria-hidden="true">&times;</span>
+                                            </button>
+                                        </div>
+                                        <div class="modal-body">
+                                            <p>Price of 1 unit: ${{ product.price_per_unit }}</p>
+                                            <div class="form-group">
+                                                <label for="quantity-{{ product.id }}">Quantity:</label>
+                                                <input type="number" class="form-control" id="quantity-{{ product.id }}" value="1" min="1" max="{{ product.stock_quantity }}" oninput="updateTotal({{ product.id }}, {{ product.price_per_unit }})">
+                                            </div>
+                                            <p id="total-price-{{ product.id }}">Total price: ${{ product.price_per_unit }}</p>
+                                            <p>Availability: {% if product.stock_quantity > 0 %}In Stock{% else %}Out of Stock{% endif %}</p>
+                                            <form action="{{ url_for('add_to_cart', product_id=product.id) }}" method="post">
+                                                <!-- All your modal input fields and info here -->
+                                                <button type="submit" class="btn btn-primary" {% if product.stock_quantity == 0 %}disabled{% endif %}>Add to Cart</button>
+                                            </form>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                {% endfor %}
+            {% else %}
+                <div class="col">
+                    <div class="alert alert-info">
+                        No products available in this category.
+                    </div>
+                </div>
+            {% endif %}
+        </div>
+    </div>
+    {% endfor %}
+</div>
+
+<div class="container mt-4">
+    <h2 class="mb-3">Your Shopping Cart</h2>
+    <table class="table">
+        <thead>
+            <tr>
+                <th>Product</th>
+                <th>Quantity</th>
+                <th>Price</th>
+                <th>Total</th>
+                <th>Actions</th>
+            </tr>
+        </thead>
+        <tbody>
+            {% for item in current_user.cart_items %}
+                <tr>
+                    <td>{{ item.product.name }}</td>
+                    <td>
+                        <input type="number" class="form-control" value="{{ item.quantity }}" min="1">
+                    </td>
+                    <td>${{ item.product.price_per_unit }}</td>
+                    <td>${{ item.calculate_total_price() * item.quantity }}</td>
+                    <td>
+                        <a href="{{ url_for('remove_from_cart', item_id=item.id) }}" class="btn btn-sm btn-danger">Remove</a>
+                    </td>
+                </tr>
+            {% endfor %}
+        </tbody>
+    </table>
+    <div class="text-right">
+        <h5>Total: ${{ cart_total }}</h5>
+        <a href="{{ url_for('checkout') }}" class="btn btn-primary">Proceed to Checkout</a>
+    </div>
+</div>
+
+<script>
+    function updateTotal(productId, pricePerUnit) {
+        var quantity = document.getElementById('quantity-' + productId).value;
+        var totalPrice = document.getElementById('total-price-' + productId);
+        totalPrice.innerText = "Total price: $" + (pricePerUnit * quantity).toFixed(2);
+    }
+</script>
+
+{% endblock %}
+
+
+
+

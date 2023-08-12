@@ -1,0 +1,52 @@
+{% extends 'base.html' %}
+
+{% block content %}
+<div class="container">
+    <div class="d-flex justify-content-end mt-3 mb-4">
+        <div class="mr-3">
+            <a href="{{ url_for('user_dashboard') }}" class="btn btn-primary">Dashboard</a>
+        </div>
+        <div>
+            <a href="{{ url_for('logout') }}" class="btn btn-danger">Logout</a>
+        </div>
+    </div>
+    
+    <h1 class="display-4 mb-4 text-primary">Your Orders</h1>
+
+    <div class="table-responsive">
+        <table class="table table-striped table-bordered cool-table">
+            <thead class="thead-dark">
+                <tr>
+                    <th>Product</th>
+                    <th>Quantity</th>
+                    <th>Price</th>
+                    <th>Total</th>
+                    <th>Action</th>
+                    <th>Your Valuable Review</th>
+                </tr>
+            </thead>
+            <tbody>
+                {% for item in cart_items %}
+                <tr>
+                    <td>{{ item.product.name }}</td>
+                    <td>{{ item.quantity }}</td>
+                    <td>${{ item.product.price_per_unit }}</td>
+                    <td>${{ item.product.price_per_unit * item.quantity }}</td>
+                    <td>
+                        <a href="#" class="btn btn-danger btn-sm cool-btn">Delete</a>
+                    </td>
+                    <td>
+                        <form method="POST" action="{{ url_for('add_review', product_id=item.product_id) }}">
+                            <div class="form-group">
+                                <textarea name="review_content" placeholder="Write your review here..." class="form-control cool-textarea"></textarea>
+                            </div>
+                            <button type="submit" class="btn btn-primary btn-sm cool-btn">Submit Review</button>
+                        </form>
+                    </td>
+                </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+    </div>
+</div>
+{% endblock %}

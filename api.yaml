@@ -1,0 +1,131 @@
+openapi: 3.0.0
+info:
+  title: Products API
+  version: 1.0.0
+
+paths:
+  /api/categories:
+    post:
+      summary: Create a new category
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                name:
+                  type: string
+      responses:
+        '201':
+          description: Category created
+    get:
+      summary: Get all categories
+      responses:
+        '200':
+          description: List of categories
+
+  /api/categories/{category_id}:
+    put:
+      summary: Update a category
+      parameters:
+        - name: category_id
+          in: path
+          required: true
+          description: ID of the category to update
+          schema:
+            type: integer
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                name:
+                  type: string
+      responses:
+        '200':
+          description: Category updated
+    delete:
+      summary: Delete a category
+      parameters:
+        - name: category_id
+          in: path
+          required: true
+          description: ID of the category to delete
+          schema:
+            type: integer
+      responses:
+        '200':
+          description: Category deleted
+
+  /api/products:
+    post:
+      summary: Create a new product
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                name:
+                  type: string
+                category_id:
+                  type: integer
+                price:
+                  type: number
+                description:
+                  type: string
+      responses:
+        '201':
+          description: Product created
+    get:
+      summary: Get all products
+      responses:
+        '200':
+          description: List of products
+
+  /api/products/{product_id}:
+    put:
+      summary: Update a product
+      parameters:
+        - name: product_id
+          in: path
+          required: true
+          description: ID of the product to update
+          schema:
+            type: integer
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                name:
+                  type: string
+                category_id:
+                  type: integer
+                price:
+                  type: number
+                description:
+                  type: string
+      responses:
+        '200':
+          description: Product updated
+    delete:
+      summary: Delete a product
+      parameters:
+        - name: product_id
+          in: path
+          required: true
+          description: ID of the product to delete
+          schema:
+            type: integer
+      responses:
+        '200':
+          description: Product deleted
+
+
