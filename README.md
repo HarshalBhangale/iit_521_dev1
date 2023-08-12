@@ -32,7 +32,7 @@ While Developing the project , Was getting some errors so I avoided using Venv ,
 - Solved : Creating a Unique Cart for each User
 - ## Remaining:
     - 1. Using Cascade in SQL to delete all the products with the categories , 
-    Right now ,each product is needed to removed first before deleting each category **
+    Right now ,each product is needed to removed first before deleting each category 
     - 2. Api's not working
     - 3. No css used , So not great styling !! 
     - 4. Minor Bugs might present.
