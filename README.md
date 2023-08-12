@@ -29,14 +29,14 @@ While Developing the project , Was getting some errors so I avoided using Venv ,
     python app.py
     ```
 ## Problems I faced and is Still working On :: 
-** Solved : Creating a Unique Cart for each User **
-** Remaining:**
-    1. Using Cascade in SQL to delete all the products with the categories , 
+- Solved : Creating a Unique Cart for each User
+- ## Remaining:
+    - 1. Using Cascade in SQL to delete all the products with the categories , 
     Right now ,each product is needed to removed first before deleting each category **
-    2. Api's not working
-    3. No css used , So not great styling !! 
-    4. Minor Bugs might present.
-    5. entire Code is in one app.py which is Horrible , But I tried to make it as good as possible 
+    - 2. Api's not working
+    - 3. No css used , So not great styling !! 
+    - 4. Minor Bugs might present.
+    - 5. entire Code is in one app.py which is Horrible , But I tried to make it as good as possible 
     by adding Comments and lines between each independent functions
 
 ## Database Models
