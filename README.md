@@ -1,4 +1,4 @@
-# MAD1_GRocery Store Project 
+# APDEV GRocery Store Project 
 
 ## General
 This is a Flask-based web application with functionalities that include Grocery Store management and Marketplace .
